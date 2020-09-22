@@ -1,4 +1,0 @@
-#!/bin/execlineb -P
-redirfd -w 1 /dev/null fdmove -c 2 1
-/sbin/dhcpcd enp11s0
-
