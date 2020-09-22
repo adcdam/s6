@@ -1,0 +1,15 @@
+00
+mount-tmp
+mount-proc
+mount-sys
+mount-dev
+udevd
+udev-coldplug
+tty2
+urandom
+loopback
+dhcpcd
+mount-root
+mount-home
+
+

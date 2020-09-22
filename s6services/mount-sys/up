@@ -1,0 +1,24 @@
+if {
+  if -nt { mountpoint -q /sys }
+  mount -n -t sysfs -o noatime,nodev,noexec,nosuid sysfs /sys
+}
+foreground {
+  if -t { grep -qsF pstore /proc/filesystems }
+  if -nt { mountpoint -q /sys/fs/pstore }
+  mount -t pstore -o nodev,noexec,nosuid pstore /sys/fs/pstore
+}
+foreground {
+  if -t { grep -qsF efivarfs /proc/filesystems }
+  if -nt { mountpoint -q /sys/firmware/efi/efivars }
+  mount -n -t efivarfs -o noatime,nodev,noexec,nosuid,rw efivarfs /sys/firmware/efi/efivars
+}
+foreground {
+  if -t { grep -qsF debugfs /proc/filesystems }
+  if -nt { mountpoint -q /sys/kernel/debug }
+  mount -n -t debugfs -o noatime,nodev,noexec,nosuid,rw debugfs /sys/kernel/debug
+}
+foreground {
+  if -t { grep -qsF tracefs /proc/filesystems }
+  if -nt { mountpoint -q /sys/kernel/debug/tracing }
+  mount -n -t tracefs -o noatime,nodev,noexec,nosuid,rw tracefs /sys/kernel/debug/tracing
+}

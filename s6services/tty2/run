@@ -1,0 +1,6 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+backtick -n TTY { sh -c "echo ${PWD##*-}" }
+importas -iu TTY TTY
+exec /sbin/agetty -L -8 $TTY 115200
+

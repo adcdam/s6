@@ -1,0 +1,13 @@
+foreground {
+    if { hwclock --systz -u }
+    hwclock -s -u
+}
+foreground {
+    hostname thehostname
+}
+foreground {
+    dmesg -n1
+}
+if { mkdir -p /run/lock }
+if -t { chmod -f 0775 /run/lock }
+chown -f root:uucp /run/lock

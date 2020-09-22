@@ -1,0 +1,7 @@
+#!/bin/execlineb -P
+
+foreground {
+    if { test -e /proc/sys/kernel/hotplug }
+    redirfd -w 1 /proc/sys/kernel/hotplug echo ""
+}
+/sbin/udevd

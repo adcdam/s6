@@ -1,0 +1,30 @@
+#if { if -nt { mountpoint -q /dev } mount -n -t devtmpfs -o rw,exec,nosuid,mode=0755,size=28M devtmpfs /dev }
+if { ln -fns /proc/self/fd /dev/fd }
+if { ln -fns /proc/self/fd/0 /dev/stdin }
+if { ln -fns /proc/self/fd/1 /dev/stdout }
+if { ln -fns /proc/self/fd/2 /dev/stderr }
+if { if -t { test -e /proc/kcore } ln -fns /proc/kcore /dev/kcore }
+if { if -nt { test -c /dev/console } mknod -m 600 /dev/console c 5 1 }
+if { if -nt { test -c /dev/tty1 } mknod -m 620 /dev/tty1 c 4 1 }
+if { if -nt { test -c /dev/tty } mknod -m 666 /dev/tty c 5 0 }
+if { if -nt { test -c /dev/null } mknod -m 666 /dev/null c 1 3 }
+if { if -nt { test -c /dev/kmsg } mknod -m 660 /dev/kmsg c 1 11 }
+foreground {
+  if -t { grep -qsF mqueue /proc/filesystems }
+  if -nt { mountpoint -q /dev/mqueue }
+  if { mkdir -m 1777 -p /dev/mqueue }
+  mount -n -t mqueue -o noatime,nodev,noexec,nosuid mqueue /dev/mqueue
+}
+foreground {
+  if -t { grep -qsF devpts /proc/filesystems }
+  if -nt { mountpoint -q /dev/pts }
+  if { mkdir -m 0755 -p /dev/pts }
+  if { mount -n -t devpts -o noexec,nosuid,gid=5,mode=0620,ptmxmode=0666 devpts /dev/pts }
+  if -nt { test -c /dev/ptmx } ln -fns pts/ptmx /dev/ptmx
+}
+foreground {
+  if -t { grep -qsF tmpfs /proc/filesystems }
+  if -nt { mountpoint -q /dev/shm }
+  if { mkdir -m 1777 -p /dev/shm }
+  mount -n -t tmpfs -o noatime,nodev,noexec,nosuid,mode=1777 shm /dev/shm
+}
