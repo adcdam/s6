@@ -1,4 +1,4 @@
 #!/usr/bin/execlineb -P
 redirfd -w 1 /dev/null fdmove -c 2 1
-foreground { redirfd -w 1 /dev/null udevadm trigger --action=add --type=subsystems }
-foreground { redirfd -w 1 /dev/null udevadm trigger --action=add --type=devices }
+foreground {  udevadm trigger --action=add --type=subsystems }
+foreground {  udevadm trigger --action=add --type=devices }
