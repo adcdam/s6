@@ -1,6 +1,5 @@
 foreground {
-    if { hwclock --systz -u }
-    hwclock -s -u
+    /sbin/hwclock -s -u
 }
 foreground {
     hostname thehostname
