@@ -2,7 +2,7 @@ foreground {
     /sbin/hwclock -s -u
 }
 foreground {
-    hostname thehostname
+    hostname (your hostname)
 }
 foreground {
     dmesg -n1
