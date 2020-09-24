@@ -1,0 +1,11 @@
+#!/bin/sh -e
+TIME="init-$(date +%s)"
+S6LIDIR=/etc/s6-linux-init
+if [ ! -d $S6LIDIR ] ; then
+  mkdir $S6LIDIR
+  for PROG in halt init powreoff reboot shutdown telinit ; do
+    ln -s $S6LIDIR/current/bin/$PROG /sbin
+  done
+fi
+s6-linux-init-maker -1 -G "/sbin/agetty 38400 tty1" $S6LIDIR/$TIME
+ln -snf $S6LIDIR/$TIME $S6LIDIR/current
